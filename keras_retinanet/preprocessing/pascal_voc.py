@@ -27,27 +27,31 @@ try:
 except ImportError:
     import xml.etree.ElementTree as ET
 
+# voc_classes = {
+#     'aeroplane'   : 0,
+#     'bicycle'     : 1,
+#     'bird'        : 2,
+#     'boat'        : 3,
+#     'bottle'      : 4,
+#     'bus'         : 5,
+#     'car'         : 6,
+#     'cat'         : 7,
+#     'chair'       : 8,
+#     'cow'         : 9,
+#     'diningtable' : 10,
+#     'dog'         : 11,
+#     'horse'       : 12,
+#     'motorbike'   : 13,
+#     'person'      : 14,
+#     'pottedplant' : 15,
+#     'sheep'       : 16,
+#     'sofa'        : 17,
+#     'train'       : 18,
+#     'tvmonitor'   : 19
+# }
+
 voc_classes = {
-    'aeroplane'   : 0,
-    'bicycle'     : 1,
-    'bird'        : 2,
-    'boat'        : 3,
-    'bottle'      : 4,
-    'bus'         : 5,
-    'car'         : 6,
-    'cat'         : 7,
-    'chair'       : 8,
-    'cow'         : 9,
-    'diningtable' : 10,
-    'dog'         : 11,
-    'horse'       : 12,
-    'motorbike'   : 13,
-    'person'      : 14,
-    'pottedplant' : 15,
-    'sheep'       : 16,
-    'sofa'        : 17,
-    'train'       : 18,
-    'tvmonitor'   : 19
+    'ship'   : 0
 }
 
 
@@ -153,7 +157,10 @@ class PascalVocGenerator(Generator):
         """ Parse an annotation given an XML element.
         """
         truncated = _findNode(element, 'truncated', parse=int)
-        difficult = _findNode(element, 'difficult', parse=int)
+        try:
+            difficult = _findNode(element, 'difficult', parse=int)
+        except Exception:
+            difficult = _findNode(element, 'Difficult', parse=int)
 
         class_name = _findNode(element, 'name').text
         if class_name not in self.classes:
